@@ -1,3 +1,9 @@
+@if(Session::has('mensaje'))
+    {{Session::get('mensaje')}}
+@endif
+
+<a href="{{url('brands/create')}}">Create</a>
+
 <table>
     <thead>
         <tr>

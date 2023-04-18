@@ -15,7 +15,7 @@ use App\Http\Controllers\BrandsController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 
@@ -33,3 +33,11 @@ Route::get('/', function () {
 //Terceta forma
 //Accediendo a todos los elementos
 Route::resource('brands',BrandsController::class);
+Auth::routes();
+
+Route::get('/home', [BrandsController::class, 'index'])->name('home');
+
+//Ruta que confirmara y actuara en caso de que el usuario ya haya iniciado sesíon
+Route::group(['middleware'=>'auth'],function(){
+    Route::get('/',[BrandsController::class,'index'])->name('home');
+});

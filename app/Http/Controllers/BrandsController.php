@@ -37,7 +37,7 @@ class BrandsController extends Controller
         $brandInfo = request()->except('_token');
         brands::insert($brandInfo);
         //return response()->json($brandInfo);
-        return redirect('brands');
+        return redirect('brands')->with('mensaje','La marca se registro correctamente');
     }
 
     /**
@@ -66,7 +66,8 @@ class BrandsController extends Controller
         brands::where('id','=',$brand_id)->update($brandInfo);
         
         $brand=brands::findOrFail($brand_id);
-        return view('brands.edit', compact('brand'));
+        // return view('brands.edit', compact('brand'));
+        return redirect('brands');
     }
 
     /**
