@@ -12,7 +12,7 @@ class BrandsController extends Controller
      */
     public function index()
     {
-        $datos['brands'] = brands::paginate(5);
+        $datos['brands'] = brands::paginate();
         return view("brands.index", $datos);
     }
 
