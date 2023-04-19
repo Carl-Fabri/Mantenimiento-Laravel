@@ -1,7 +1,14 @@
+@extends('layouts.app')
+@section('content')
 
-<form action="{{url('/brands/')}}" method="post" enctype="multipart/form-data">
+<div class="container">
 
-    @csrf
-    @include('brands.form',['modo' =>'Crear']);
+    <form action="{{url('/brands/')}}" method="post" enctype="multipart/form-data">
 
-</form>
+        @csrf
+        @include('brands.form',['modo' =>'Crear'])
+    
+    </form>
+
+</div>
+@endsection

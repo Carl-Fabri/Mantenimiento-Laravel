@@ -30,6 +30,22 @@ class BrandsController extends Controller
      */
     public function store(Request $request)
     {
+        //Agregando valicacion
+        $campos=[
+            'name' => 'required|string|max:200',
+            'commercial_name' => 'string|max:200',
+            'keywords' => 'required|string|max:400',
+        ];
+
+        //mensajes cuando no se cumple una validacion
+        $mensajeError=[
+            'required' =>'El :attribute es requerido',
+            'keywords.required'=>'Almenos se necesita una etiqueta'
+        ];
+        
+        $this->validate($request,$campos,$mensajeError);
+
+
         //Codigo para traer toda la informacon de la base de datos
         //$brandInfo = request()->all();
 
@@ -62,12 +78,26 @@ class BrandsController extends Controller
      */
     public function update(Request $request, $brand_id)
     {
+        //Agregando valicacion
+        $campos=[
+            'name' => 'required|string|max:200',
+            'commercial_name' => 'string|max:200',
+            'keywords' => 'required|string|max:400',
+        ];
+
+        //mensajes cuando no se cumple una validacion
+        $mensajeError=[
+            'required' =>'El :attribute es requerido',
+            'commercial_name.required'=>'Almenos se necesita una etiqueta'
+        ];
+
+        $this->validate($request,$campos,$mensajeError);
         $brandInfo = request()->except(['_token','_method']);
         brands::where('id','=',$brand_id)->update($brandInfo);
         
         $brand=brands::findOrFail($brand_id);
         // return view('brands.edit', compact('brand'));
-        return redirect('brands');
+        return redirect('brands')->with('mensaje','Marca modificada');
     }
 
     /**
@@ -75,7 +105,8 @@ class BrandsController extends Controller
      */
     public function destroy($brand_id)
     {
+        //$Brand=brands::findOrFail($brand_id);
         brands::destroy($brand_id);
-        return redirect('brands');
+        return redirect('brands')->with('mensaje','La marca se elimino correctamente');
     }
 }
