@@ -14,9 +14,7 @@ use App\Http\Controllers\BrandsController;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+
 
 
 
@@ -30,12 +28,14 @@ Route::get('/', function () {
 //Segunda forma - accedientdo solo a un metodo
 //Route::get('/brands/create',[BrandsController::class, 'create']);
 
+//[] = agrego los campos que quiero desapaceres
+Auth::routes(['register'=>true,'reset'=>false]); 
+
 //Terceta forma
 //Accediendo a todos los elementos
-Route::resource('brands',BrandsController::class);
-Auth::routes();
+Route::resource('brands',BrandsController::class)->middleware('auth');
 
-Route::get('/home', [BrandsController::class, 'index'])->name('home');
+Route::get('/home', [BrandsController::class, 'index'])->name('home')->middleware('auth');
 
 //Ruta que confirmara y actuara en caso de que el usuario ya haya iniciado sesíon
 Route::group(['middleware'=>'auth'],function(){
